@@ -102,7 +102,8 @@ function getWinner(playerHand, enemyHand) {
   }
   if (pCard.value === eCard.value) {
     // warTime(playerHand, enemyHand, pCard, eCard);
-    const risk = prompt('How many cards would you like to wager?');
+    const risk = prompt(`It's a war! ${pCard.face} vs. ${eCard.face}! How many cards
+    would you like to wager?`);
     // console.log(risk);
     const atRisk = parseInt(risk);
     // console.log(atRisk);
@@ -112,7 +113,7 @@ function getWinner(playerHand, enemyHand) {
     const pRisk = playerHand.splice(0, atRisk);
     // console.log(pRisk);
     const eRisk = enemyHand.splice(0, atRisk);
-    // console.log(eRisk);
+      // console.log(eRisk);
     // console.log(playerHand, 'should be new player hand minus risk');
     // the flip over the next card
     pCard = playerHand[0];
@@ -132,7 +133,7 @@ function getWinner(playerHand, enemyHand) {
       // console.log(playerHand);
       playerHand.push(pCard, eCard);
       console.log(playerHand, enemyHand, 'inside player win');
-      alert(`You just won ${pRisk.length + eRisk.length + 2} cards!--------------------alert`);
+      alert(`Outcome: ${pCard.face} vs. ${eCard.face} You've won!`);
       playerHand.shift();
       enemyHand.shift();
       winStatus = true;
@@ -149,7 +150,7 @@ function getWinner(playerHand, enemyHand) {
       // console.log(enemyHand);
       enemyHand.push(pCard, eCard);
       console.log(playerHand, enemyHand, 'inside enemy win');
-      alert(`Enemy just won ${pRisk.length + eRisk.length + 2} cards :(-----------------alert!`);
+      alert(`Enemy just won ${pRisk.length + eRisk.length + 2} Outcome: ${pCard.face} vs. ${eCard.face}`);
       playerHand.shift();
       enemyHand.shift();
       winStatus = false;
