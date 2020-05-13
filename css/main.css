@@ -1,0 +1,14 @@
+body {
+  background-color: plum;
+  height: 100vh;
+  text-align: center;
+}
+svg {
+  filter: hue-rotate(-70deg) saturate(5) !important;
+}
+#player-card {
+}
+img {
+  background-color: white;
+  width: 100%;
+}
