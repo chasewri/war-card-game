@@ -48,6 +48,10 @@ const displayMess = document.querySelector('#display-mess');
 const button = document.querySelector('button');
 const pRemaining = document.querySelector('#p-how-many');
 const eRemaining = document.querySelector('#e-how-many');
+const modalInput = document.querySelector('#tie-input');
+const tieMessage = document.querySelector('#tie-message');
+const firstTieModal = document.querySelector('#tie');
+const modalButton = document.querySelector('#tie-button');
 
 button.addEventListener('click', firstButtonPush, { once: true });
 
@@ -90,8 +94,8 @@ function getWinner(playerHand, enemyHand) {
     enemyHand.shift();
   }
   if (pCard.value === eCard.value) {
-    const risk = prompt(`It's a war! ${pCard.face} vs. ${eCard.face}! How many cards
-    would you like to wager?`);
+    firstTie(pCard, eCard, playerHand, enemyHand);
+    const risk = modalInput.value;
     const atRisk = parseInt(risk);
     const pRisk = playerHand.splice(0, atRisk);
     const eRisk = enemyHand.splice(0, atRisk);
@@ -195,4 +199,14 @@ function firstButtonPush() {
   button.addEventListener('click', function(){getWinner(playerHand, enemyHand)});
   console.log(playerHand, 'playerHand after firstButtonPush');
   return playerHand && enemyHand;
+}
+function firstTie(pCard, eCard, playerHand, enemyHand) {
+  tieMessage.innerHTML = `It's a tie! How many cards would you like wager on the outcome of this war?  \
+  You currently have ${playerHand.length} cards in your hand`;
+  firstTieModal.style.display = 'block';
+  modalButton.addEventListener('click', function() {
+    tieMessage.innerHTML = `You have decided to wager ${parseInt(modalInput.value)} cards!`;
+    modalButton.style.display = 'none';
+    modalInput.style.display = 'none';
+  });
 }
