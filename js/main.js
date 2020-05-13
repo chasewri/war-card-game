@@ -10,13 +10,10 @@ const masterDeck = buildMasterDeck();
 // Build deck
 function buildMasterDeck() {
   const deck = [];
-  // Use nested forEach to generate card objects
   suits.forEach(function(suit) {
     ranks.forEach(function(rank) {
       deck.push({
-        // The 'face' property maps to the library's CSS classes for cards
         face: `${suit}${rank}`,
-        // Setting the 'value' property for game of blackjack, not war
         value: Number(rank) || (rank === 'A' ? 14 : rank === 'K' ? 13 : rank ==='Q' ? 12 : 11)
       });
     });
@@ -27,15 +24,11 @@ function buildMasterDeck() {
 // --------------------------------------------------------
 // Shuffle Deck
 function getShuffledDeck() {
-  // Create a copy of the masterDeck (leave masterDeck untouched!)
   const tempDeck = [...masterDeck];
   shuffledDeck = [];
   while (tempDeck.length) {
-    // Get a random index for a card still in the tempDeck
     const rndIdx = Math.floor(Math.random() * tempDeck.length);
-    // Note the [0] after splice - this is because splice always returns an array and we just want the card object in that array
     shuffledDeck.push(tempDeck.splice(rndIdx, 1)[0]);
-    // console.log(shuffledDeck)
   }
   return shuffledDeck;
 }
@@ -43,9 +36,7 @@ function getShuffledDeck() {
 function getHands() {
   getShuffledDeck();
   playerHand = shuffledDeck.splice(0, 26);
-  // console.log(playerHand);
   enemyHand = shuffledDeck.splice(0, 26);
-  // console.log(enemyHand);
   return playerHand && enemyHand;
 }
 
@@ -80,12 +71,10 @@ function getCards() {
   enemyDeck.setAttribute('class', 'card back xlarge animate__animated animate__flipInX');
   displayMess.innerHTML = 'Let the battle begin!';
   button.innerHTML = 'Battle!';
-    // button.addEventListener('click', function(){render(pCard, eCard, playerHand, enemyHand)});
 }
 function getWinner(playerHand, enemyHand) {
   console.log(playerHand, enemyHand, 'just inside of getWinner--');
   let pCard = playerHand[0];
-  // console.log(pCard, 'in get winner here --');
   let eCard = enemyHand[0];
   let winStatus;
   if (pCard.value > eCard.value) {
@@ -101,36 +90,21 @@ function getWinner(playerHand, enemyHand) {
     enemyHand.shift();
   }
   if (pCard.value === eCard.value) {
-    // warTime(playerHand, enemyHand, pCard, eCard);
     const risk = prompt(`It's a war! ${pCard.face} vs. ${eCard.face}! How many cards
     would you like to wager?`);
-    // console.log(risk);
     const atRisk = parseInt(risk);
-    // console.log(atRisk);
-    // risknumber splice those cards from each deck.
-    // const pHandCopy = [...playerHand];
-    // const eHandCopy = [...enemyHand];
     const pRisk = playerHand.splice(0, atRisk);
-    // console.log(pRisk);
     const eRisk = enemyHand.splice(0, atRisk);
-      // console.log(eRisk);
-    // console.log(playerHand, 'should be new player hand minus risk');
-    // the flip over the next card
     pCard = playerHand[0];
     eCard = enemyHand[0];
-    // console.log(pCard, 'new pCard should be here');
-    // console.log(eCard, 'should be new ecard here too');
+
     if (pCard.value > eCard.value) {
-      // playerHand = playerHand.concat(pRisk, eRisk);
       pRisk.forEach(function(obj) {
         playerHand.push(obj);
       });
       eRisk.foreach(function(obj) {
         playerHand.push(obj);
       });
-      // console.log(playerHand);
-      // playerHand = playerHand.concat(eRisk);
-      // console.log(playerHand);
       playerHand.push(pCard, eCard);
       console.log(playerHand, enemyHand, 'inside player win');
       alert(`Outcome: ${pCard.face} vs. ${eCard.face} You've won!`);
@@ -145,24 +119,71 @@ function getWinner(playerHand, enemyHand) {
       eRisk.forEach(function(obj) {
         enemyHand.push(obj);
       });
-      // console.log(enemyHand);
-      // enemyHand = enemyHand.concat(eRisk);
-      // console.log(enemyHand);
       enemyHand.push(pCard, eCard);
       console.log(playerHand, enemyHand, 'inside enemy win');
-      alert(`Enemy just won ${pRisk.length + eRisk.length + 2} Outcome: ${pCard.face} vs. ${eCard.face}`);
+      alert(`Enemy just won ${pRisk.length + eRisk.length + 2} Outcome:
+        ${pCard.face} vs. ${eCard.face}`);
       playerHand.shift();
       enemyHand.shift();
       winStatus = false;
     }
     if (pCard.value === eCard.value) {
-      alert('Go fuck yourself for now');
+      const stash = [];
+      stash.forEach(function(obj) {
+        enemyHand.push(obj);
+      });
+      stash.forEach(function(obj) {
+        enemyHand.push(obj);
+      });
+      stash.push(pCard, eCard);
+      console.log(stash, 'stash in its if statement');
+      alert(`It's a tie again! You are risking just an additional two cards`)
+      const addPRisk = playerHand.splice(0, 2);
+      const addERisk = enemyCard.splice(0, 2);
+      pCard = playerHand[0];
+      eCard = enemyHand[0];
+      if (pCard.value > eCard.value) {
+        pRisk.forEach(function(obj) {
+          playerHand.push(obj);
+        });
+        eRisk.foreach(function(obj) {
+          playerHand.push(obj);
+        });
+        stash.forEach(function(obj) {
+          playerHand.push(obj);
+        });
+        playerHand.push(pCard, eCard);
+        console.log(playerHand, enemyHand, 'inside player win');
+        alert(`Outcome: ${pCard.face} vs. ${eCard.face} You've won!`);
+        playerHand.shift();
+        enemyHand.shift();
+        winStatus = true;
+      }
+      if (pCard.value < eCard.value) {
+        pRisk.forEach(function(obj) {
+          enemyHand.push(obj);
+        });
+        eRisk.forEach(function(obj) {
+          enemyHand.push(obj);
+        });
+        stash.forEach(function(obj) {
+          enemyHand.push(obj);
+        });
+        enemyHand.push(pCard, eCard);
+        console.log(playerHand, enemyHand, 'inside enemy win');
+        alert(`Enemy just won ${pRisk.length + eRisk.length + 2} Outcome:
+          ${pCard.face} vs. ${eCard.face}`);
+        playerHand.shift();
+        enemyHand.shift();
+        winStatus = false;
+      }
+      if (pCard.value === eCard.value) {
+        alert('I give up for now')
+      }
     }
   }
   console.log(playerHand, enemyHand, 'at the very end of get win');
   viewCardChange(winStatus, pCard, eCard, playerHand, enemyHand);
-  // button.removeEventListener('click', function(){nextButtonPushes(playerHand, enemyHand)}, { once: true });
-  // button.addEventListener('click', function(){nextButtonPushes(playerHand, enemyHand)}, { once: true });
   return playerHand && enemyHand && pCard && eCard;
 }
 
@@ -172,16 +193,4 @@ function firstButtonPush() {
   button.addEventListener('click', function(){getWinner(playerHand, enemyHand)});
   console.log(playerHand, 'playerHand after firstButtonPush');
   return playerHand && enemyHand;
-}
-// function nextButtonPushes(playerHand, enemyHand) {
-//   console.log(playerHand, enemyHand, 'in nextButtonPushes before getWinner call');
-//   getWinner(playerHand, enemyHand);
-//   console.log(playerHand, enemyHand, 'in nextButtonPushes after getWinner call');
-//
-// }
-function warTime(playerHand, enemyHand, pCard, eCard) {
-  // light box to ask how many cards the player wants to risk
-
-  // viewCardChange(winStatus, pCard, eCard);
-  // return playerHand && enemyHand;
 }
