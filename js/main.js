@@ -95,14 +95,16 @@ function getWinner(playerHand, enemyHand) {
     const atRisk = parseInt(risk);
     const pRisk = playerHand.splice(0, atRisk);
     const eRisk = enemyHand.splice(0, atRisk);
+    console.log(pRisk, eRisk, 'inside the tie if');
     pCard = playerHand[0];
     eCard = enemyHand[0];
 
     if (pCard.value > eCard.value) {
+
       pRisk.forEach(function(obj) {
         playerHand.push(obj);
       });
-      eRisk.foreach(function(obj) {
+      eRisk.forEach(function(obj) {
         playerHand.push(obj);
       });
       playerHand.push(pCard, eCard);
@@ -146,7 +148,7 @@ function getWinner(playerHand, enemyHand) {
         pRisk.forEach(function(obj) {
           playerHand.push(obj);
         });
-        eRisk.foreach(function(obj) {
+        eRisk.forEach(function(obj) {
           playerHand.push(obj);
         });
         stash.forEach(function(obj) {
