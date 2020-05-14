@@ -56,14 +56,20 @@
     </div>
     <!-- modal for first tie/war -->
     <div id="tie" class="mdl-grid modal">
-      <div class="mdl-cell mdl-cell--2-col mdl-cell--6-offset">
-
+      <!-- <div class="mdl-cell mdl-cell--2-col mdl-cell--6-offset">
+        <div class="class outline xlarge"></div>
       </div>
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset">
-        <h2 id="tie-message"></h2>
+      <div class="mdl-cell mdl-cell--2-col mdl-cell--1-offset">
+        <div class="class outline xlarge"></div>
+      </div> -->
+      <div class="mdl-cell-middle mdl-cell--6-col">
+        <h4 id="tie-message"></h4>
+        <div id="player-card-tie" class="card outline xlarge"></div>
+        <div id="enemy-card-tie" class="card outline xlarge"></div>
         <input id="tie-input" type="number" autofocus>
         <button id="tie-button" class="mdl-button mdl-js-button
         mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Set wager!</button>
+        <h4 id="card-result"></h4>
       </div>
     </div>
   </body>
