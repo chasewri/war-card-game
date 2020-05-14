@@ -263,5 +263,5 @@ function gameOver() {
   firstTieModal.style.display = 'flex';
   modalButton.addEventListener('click', function() {
     window.location.reload();
-  })
+  });
 }
