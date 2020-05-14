@@ -243,7 +243,7 @@ function tieButtonSecond() {
   getWinner();
 }
 function gameStatus() {
-  if (playerHand <= 0 || enemyHand <= 0) {
+  if (playerHand.length === 0 || enemyHand.length === 0) {
     gameOver();
   } else {
     return;
