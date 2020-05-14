@@ -203,7 +203,6 @@ function decideTie() {
     });
     playerHand.push(pCard, eCard);
     console.log(playerHand, enemyHand, 'inside player win');
-    // alert(`Outcome: ${pCard.face} vs. ${eCard.face} You've won!`);
     playerHand.shift();
     enemyHand.shift();
     winStatus = true;
@@ -217,8 +216,6 @@ function decideTie() {
     });
     enemyHand.push(pCard, eCard);
     console.log(playerHand, enemyHand, 'inside enemy win');
-    // alert(`Enemy just won ${pRisk.length + eRisk.length + 2} Outcome:
-    //   ${pCard.face} vs. ${eCard.face}`);
     playerHand.shift();
     enemyHand.shift();
     winStatus = false;
@@ -236,7 +233,6 @@ function changeTieView(winStatus, pCard, eCard, pRisk) {
   enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__jackInTheBox`);
   cardResult.innerHTML = (winStatus === true) ? `You have gained ${pRisk.length * 2 + 2} cards!` : `You have lost ${pRisk.length * 2 + 2} cards`;
   modalButton.innerHTML = 'Continue';
-  // modalButton.style.display = 'inline';
   modalInput.style.display = 'none';
   modalButton.removeEventListener('click', tieButtonFirst);
   modalButton.addEventListener('click', tieButtonSecond);
