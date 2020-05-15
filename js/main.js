@@ -7,7 +7,7 @@ let winStatus = null;
 let stash = [];
 let addPRisk = [];
 let addERisk = [];
-let vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 // Build deck -----------------------------------------------------------------
 function buildMasterDeck() {
   const deck = [];
@@ -109,7 +109,7 @@ function getWinner() {
 // Handle tie and tie view changes --------------------------------------------
 function firstTie(pCard, eCard) {
   tieMessage.innerHTML = `It's a tie! How many cards would you like wager on the outcome of this war?  \
-  You currently have ${playerHand.length} cards. The enemy has ${enemyHand.length} cards.`;
+  You currently have ${playerHand.length - 1} cards. The enemy has ${enemyHand.length - 1} cards.`;
   modalInput.style.display = 'block';
   playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__fadeInUpBig`);
   enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__fadeInUpBig`);
