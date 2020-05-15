@@ -9,5 +9,5 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 ## Technologies Used
 
 ## Getting Started
-There is a link for the game [here.](https://chasewri.github.io/war-card-game/)
+There is a link for the game [here.](https://chasewri.github.io/war-card-game/?target=_blank)
 ## Next Steps
