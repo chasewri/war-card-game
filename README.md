@@ -21,3 +21,4 @@ There is a link for the game [here.](https://chasewri.github.io/war-card-game)
 <!-- - The CSS cards used are currently formatted for a desktop screen, media queries need to be implemented for use on smaller screens. The CSS framework is made for it, but the cards' classes need to be changed on viewport change. -->
 - More game functionality on smaller screens.
 - The cards are served locally and need to be prerendered to smoothe gameplay.
+- Try to make the UI less gross.
