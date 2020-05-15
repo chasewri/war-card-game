@@ -7,6 +7,7 @@ let winStatus = null;
 let stash = [];
 let addPRisk = [];
 let addERisk = [];
+const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 // Build deck -----------------------------------------------------------------
 function buildMasterDeck() {
   const deck = [];
@@ -46,7 +47,6 @@ function firstButtonPush() {
   getHands();
   getCards();
   button.addEventListener('click', getWinner);
-  console.log(playerHand, 'playerHand after firstButtonPush');
 }
 // Query selectors ------------------------------------------------------------
 const playerCard = document.querySelector('#player-card');
@@ -68,7 +68,6 @@ const cardResult = document.querySelector('#card-result');
 button.addEventListener('click', firstButtonPush, { once: true });
 // Change of view after battle without a tie-----------------------------------
 function viewCardChange(pCard, eCard) {
-  console.log(playerHand, enemyHand, 'inside of the viewCardChange function');
   if (pCard.value % 2 === 0) {
     playerCard.setAttribute('class', `card ${pCard.face} xlarge animate__animated animate__slideInRight`);
     enemyCard.setAttribute('class', `card ${eCard.face} xlarge animate__animated animate__slideInLeft`);
@@ -85,9 +84,8 @@ function viewCardChange(pCard, eCard) {
   pRemaining.innerHTML = `Player has ${playerHand.length} cards in deck.`
   eRemaining.innerHTML = `Enemy has ${enemyHand.length} cards in deck.`
 }
-
+// Function to determine simple win or send to tie event ----------------------
 function getWinner() {
-  console.log(playerHand, enemyHand, 'just inside of getWinner--');
   let pCard = playerHand[0];
   let eCard = enemyHand[0];
   if (pCard.value > eCard.value) {
@@ -138,7 +136,6 @@ function decideTie() {
   const atRisk = parseInt(risk);
   const pRisk = playerHand.splice(0, atRisk);
   const eRisk = enemyHand.splice(0, atRisk);
-  console.log(pRisk, eRisk, 'inside the tie if');
   let pCard = playerHand[0];
   let eCard = enemyHand[0];
 
@@ -150,7 +147,6 @@ function decideTie() {
       playerHand.push(obj);
     });
     playerHand.push(pCard, eCard);
-    console.log(playerHand, enemyHand, 'inside player win');
     playerHand.shift();
     enemyHand.shift();
     winStatus = true;
@@ -165,7 +161,6 @@ function decideTie() {
       enemyHand.push(obj);
     });
     enemyHand.push(pCard, eCard);
-    console.log(playerHand, enemyHand, 'inside enemy win');
     playerHand.shift();
     enemyHand.shift();
     winStatus = false;
@@ -258,7 +253,6 @@ function resolveSecondTie() {
   addERisk = enemyHand.splice(0, 2);
   pCard = playerHand[0];
   eCard = enemyHand[0];
-  console.log(playerHand, enemyHand);
   if (pCard.value > eCard.value) {
     addPRisk.forEach(function(obj) {
       playerHand.push(obj);
@@ -270,7 +264,6 @@ function resolveSecondTie() {
       playerHand.push(obj);
     });
     playerHand.push(pCard, eCard);
-    console.log(playerHand, enemyHand);
     playerHand.shift();
     enemyHand.shift();
     winStatus = true;
@@ -278,7 +271,6 @@ function resolveSecondTie() {
     secondChangeTieView(pCard, eCard);
   }
   if (pCard.value < eCard.value) {
-    console.log(playerHand, enemyHand);
     addPRisk.forEach(function(obj) {
       enemyHand.push(obj);
     });
@@ -292,7 +284,6 @@ function resolveSecondTie() {
     playerHand.shift();
     enemyHand.shift();
     winStatus = false;
-    console.log(playerHand, enemyHand);
     gameStatus();
     secondChangeTieView(pCard, eCard);
   }
@@ -328,4 +319,21 @@ function resolveSecondTieButton() {
   cardResult.innerHTML = '';
   firstTieModal.style.display = 'none';
   getWinner();
+}
+if (vw < 1125) {
+  alert('This game is currently formatted for a desktop screen. Sorry!')
+  playerCardTie.style.display = 'none';
+  enemyCardTie.style.display = 'none';
+  modalInput.style.display = 'none';
+  cardResult.style.display = 'none';
+  modalButton.innerHTML = 'Reload'
+  modalButton.removeEventListener('click', tieButtonFirst);
+  modalButton.removeEventListener('click', resolveSecondTie);
+  modalButton.removeEventListener('click', resolveSecondTieButton);
+  modalButton.removeEventListener('click', resolveSecondTie);
+  tieMessage.innerHTML = 'Unfortunately, this game has not yet been set up for smaller screens';
+  firstTieModal.style.display = 'flex';
+  modalButton.addEventListener('click', function() {
+    window.location.reload();
+  });
 }

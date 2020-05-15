@@ -1,13 +1,21 @@
 # War Card Game
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Based on the classic war card game. This version is slightly different, as the player is allowed to wager how many cards they would like to bet when a tie occurs. It allows from increased risk, or more conservative gameplay. If the player or the enemy has less than the three needed cards for a war, the game is ended.
 
 ## Screenshot
+![Screenshot of war card game before start](https://imgur.com/Xl4RvUQ.png)
 
-![Screenshot of war card game]()
+![Screenshot of war card game during tie sequence](https://imgur.com/92FqoaY.png)
 
 ## Technologies Used
+- HTML
+- CSS
+- Material Design Lite
+- JavaScript
 
 ## Getting Started
-There is a link for the game [here.](https://chasewri.github.io/war-card-game/?target=_blank)
+There is a link for the game [here.](https://chasewri.github.io/war-card-game)
+
 ## Next Steps
+- The input currently allows any bet input without restraint.
+- The CSS cards used are currently formatted for a desktop screen, media queries need to be implemented for use on smaller screens. The CSS framework is made for it, but the cards' classes need to be changed on viewport change.
+- The cards are served locally and need to be prerendered to smoothe gameplay.
