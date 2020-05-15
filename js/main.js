@@ -125,48 +125,53 @@ function firstTie(pCard, eCard) {
 }
 function tieButtonFirst() {
   tieMessage.innerHTML = `You have decided to wager ${parseInt(modalInput.value)} cards!`;
-
   decideTie();
 }
 function decideTie() {
-  const risk = modalInput.value;
-  modalInput.value = '';
-  const atRisk = parseInt(risk);
-  const pRisk = playerHand.splice(0, (atRisk + 1));
-  const eRisk = enemyHand.splice(0, (atRisk + 1));
-  let pCard = playerHand[0];
-  let eCard = enemyHand[0];
+  if (parseInt(modalInput.value) < playerHand.length - 2 && parseInt(modalInput.value) < enemyHand.length - 2 && parseInt(modalInput.value) != NaN) {
+    const risk = modalInput.value;
+    modalInput.value = '';
+    const atRisk = parseInt(risk);
+    const pRisk = playerHand.splice(0, (atRisk + 1));
+    const eRisk = enemyHand.splice(0, (atRisk + 1));
+    let pCard = playerHand[0];
+    let eCard = enemyHand[0];
 
-  if (pCard.value > eCard.value) {
-    pRisk.forEach(function(obj) {
-      playerHand.push(obj);
-    });
-    eRisk.forEach(function(obj) {
-      playerHand.push(obj);
-    });
-    playerHand.push(pCard, eCard);
-    playerHand.shift();
-    enemyHand.shift();
-    winStatus = true;
-    gameStatus();
-    changeTieView(winStatus, pCard, eCard, pRisk);
-  }
-  if (pCard.value < eCard.value) {
-    pRisk.forEach(function(obj) {
-      enemyHand.push(obj);
-    });
-    eRisk.forEach(function(obj) {
-      enemyHand.push(obj);
-    });
-    enemyHand.push(pCard, eCard);
-    playerHand.shift();
-    enemyHand.shift();
-    winStatus = false;
-    gameStatus();
-    changeTieView(winStatus, pCard, eCard, pRisk);
-  }
-  if (pCard.value === eCard.value) {
-    secondTie(pCard, eCard, pRisk, eRisk);
+    if (pCard.value > eCard.value) {
+      pRisk.forEach(function(obj) {
+        playerHand.push(obj);
+      });
+      eRisk.forEach(function(obj) {
+        playerHand.push(obj);
+      });
+      playerHand.push(pCard, eCard);
+      playerHand.shift();
+      enemyHand.shift();
+      winStatus = true;
+      gameStatus();
+      changeTieView(winStatus, pCard, eCard, pRisk);
+    }
+    if (pCard.value < eCard.value) {
+      pRisk.forEach(function(obj) {
+        enemyHand.push(obj);
+      });
+      eRisk.forEach(function(obj) {
+        enemyHand.push(obj);
+      });
+      enemyHand.push(pCard, eCard);
+      playerHand.shift();
+      enemyHand.shift();
+      winStatus = false;
+      gameStatus();
+      changeTieView(winStatus, pCard, eCard, pRisk);
+    }
+    if (pCard.value === eCard.value) {
+      secondTie(pCard, eCard, pRisk, eRisk);
+    }
+  } else {
+    pCard = playerHand[0];
+    eCard = enemyHand[0];
+    firstTie(pCard, eCard);
   }
 }
 function changeTieView(winStatus, pCard, eCard, pRisk) {
