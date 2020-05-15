@@ -128,7 +128,10 @@ function tieButtonFirst() {
   decideTie();
 }
 function decideTie() {
-  if (parseInt(modalInput.value) < playerHand.length - 2 && parseInt(modalInput.value) < enemyHand.length - 2 && parseInt(modalInput.value) != NaN && parseInt(modalInput.value) > 0) {
+  if (parseInt(modalInput.value) < playerHand.length - 2
+    && parseInt(modalInput.value) < enemyHand.length - 2
+    && parseInt(modalInput.value) != NaN && parseInt(modalInput.value) > 0) {
+
     const risk = parseInt(modalInput.value);
     modalInput.value = '';
     const pRisk = playerHand.splice(0, (risk + 1));
@@ -232,7 +235,7 @@ function secondTie(pCard, eCard, pRisk, eRisk) {
 }
 function secondTieView(pCard, eCard) {
   tieMessage.innerHTML = `ANOTHER Tie! There is currently ${stash.length} cards at risk!  \
-  You will only risk an additional two cards this tie.`
+    You will only risk an additional two cards this tie.`
   modalButton.innerHTML = 'Continue';
   playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__fadeInUpBig`);
   enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__fadeInUpBig`);
@@ -305,7 +308,8 @@ function secondChangeTieView(pCard, eCard) {
   tieMessage.innerHTML = (winStatus === true) ? `You have WON this war!` : `You LOST the war!! :(`;
   playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__jackInTheBox`);
   enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__jackInTheBox`);
-  cardResult.innerHTML = (winStatus === true) ? `You have GAINED ${stash.length + addPRisk.length + addERisk.length + 2} cards!` : `You have LOST out on ${stash.length + addPRisk.length + addERisk.length + 2} cards`;
+  cardResult.innerHTML = (winStatus === true) ? `You have GAINED ${stash.length + addPRisk.length + addERisk.length + 2}  \
+    cards!` : `You have LOST out on ${stash.length + addPRisk.length + addERisk.length + 2} cards`;
   cardResult.style.display = 'block';
   modalButton.innerHTML = 'Continue';
   modalInput.style.display = 'none';
