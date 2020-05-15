@@ -132,8 +132,8 @@ function decideTie() {
   const risk = modalInput.value;
   modalInput.value = '';
   const atRisk = parseInt(risk);
-  const pRisk = playerHand.splice(0, atRisk);
-  const eRisk = enemyHand.splice(0, atRisk);
+  const pRisk = playerHand.splice(0, (atRisk + 1));
+  const eRisk = enemyHand.splice(0, (atRisk + 1));
   let pCard = playerHand[0];
   let eCard = enemyHand[0];
 
