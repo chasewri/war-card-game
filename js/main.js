@@ -323,5 +323,10 @@ function resolveSecondTieButton() {
   getWinner();
 }
 if (vw < 1125) {
-  alert('This game is best enjoyed on a desktop screen!')
+  alert('This game is best enjoyed on a desktop screen!');
+  document.querySelector('h1').style.display = 'none';
+  document.querySelector('#player-deck').style.display = 'none';
+  document.querySelector('#enemy-deck').style.display = 'none';
+  document.querySelector('#p-how-many').style.display = 'none';
+  document.querySelector('#e-how-many').style.display = 'none';
 }
