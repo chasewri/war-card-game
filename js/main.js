@@ -7,7 +7,7 @@ let winStatus = null;
 let stash = [];
 let addPRisk = [];
 let addERisk = [];
-const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+let vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 // Build deck -----------------------------------------------------------------
 function buildMasterDeck() {
   const deck = [];
@@ -128,12 +128,11 @@ function tieButtonFirst() {
   decideTie();
 }
 function decideTie() {
-  if (parseInt(modalInput.value) < playerHand.length - 2 && parseInt(modalInput.value) < enemyHand.length - 2 && parseInt(modalInput.value) != NaN) {
-    const risk = modalInput.value;
+  if (parseInt(modalInput.value) < playerHand.length - 2 && parseInt(modalInput.value) < enemyHand.length - 2 && parseInt(modalInput.value) != NaN && parseInt(modalInput.value) > 0) {
+    const risk = parseInt(modalInput.value);
     modalInput.value = '';
-    const atRisk = parseInt(risk);
-    const pRisk = playerHand.splice(0, (atRisk + 1));
-    const eRisk = enemyHand.splice(0, (atRisk + 1));
+    const pRisk = playerHand.splice(0, (risk + 1));
+    const eRisk = enemyHand.splice(0, (risk + 1));
     let pCard = playerHand[0];
     let eCard = enemyHand[0];
 
@@ -325,9 +324,4 @@ function resolveSecondTieButton() {
 }
 if (vw < 1125) {
   alert('This game is best enjoyed on a desktop screen!')
-  document.querySelector('h1').style.display = 'none';
-  document.querySelector('#player-deck').style.display = 'none';
-  document.querySelector('#enemy-deck').style.display = 'none';
-  document.querySelector('#p-how-many').style.display = 'none';
-  document.querySelector('#e-how-many').style.display = 'none';
 }
