@@ -38,8 +38,8 @@ function getHands() {
   enemyHand = shuffledDeck.splice(0, 26);
 }
 function getCards() {
-  playerDeck.setAttribute('class', 'card back xlarge animate__animated animate__flipInX');
-  enemyDeck.setAttribute('class', 'card back xlarge animate__animated animate__flipInX');
+  playerDeck.setAttribute('class', 'card back animate__animated animate__flipInX');
+  enemyDeck.setAttribute('class', 'card back animate__animated animate__flipInX');
   displayMess.innerHTML = 'Let the battle begin!';
   button.innerHTML = 'Battle!';
 }
@@ -69,11 +69,11 @@ button.addEventListener('click', firstButtonPush, { once: true });
 // Change of view after battle without a tie-----------------------------------
 function viewCardChange(pCard, eCard) {
   if (pCard.value % 2 === 0) {
-    playerCard.setAttribute('class', `card ${pCard.face} xlarge animate__animated animate__slideInRight`);
-    enemyCard.setAttribute('class', `card ${eCard.face} xlarge animate__animated animate__slideInLeft`);
+    playerCard.setAttribute('class', `card ${pCard.face} animate__animated animate__slideInRight`);
+    enemyCard.setAttribute('class', `card ${eCard.face} animate__animated animate__slideInLeft`);
   } else {
-    playerCard.setAttribute('class', `card ${pCard.face} xlarge animate__animated animate__lightSpeedInRight`);
-    enemyCard.setAttribute('class', `card ${eCard.face} xlarge animate__animated animate__lightSpeedInLeft`);
+    playerCard.setAttribute('class', `card ${pCard.face} animate__animated animate__lightSpeedInRight`);
+    enemyCard.setAttribute('class', `card ${eCard.face} animate__animated animate__lightSpeedInLeft`);
   }
   if (winStatus === true) {
     displayMess.innerHTML = 'Player wins this battle!';
@@ -110,10 +110,9 @@ function getWinner() {
 function firstTie(pCard, eCard) {
   tieMessage.innerHTML = `It's a tie! How many cards would you like wager on the outcome of this war?  \
   You currently have ${playerHand.length} cards. The enemy has ${enemyHand.length} cards.`;
-  // modalInput.removeAttribute('disabled');
   modalInput.style.display = 'block';
-  playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__fadeInUpBig`);
-  enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__fadeInUpBig`);
+  playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__fadeInUpBig`);
+  enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__fadeInUpBig`);
   firstTieModal.style.display = 'flex';
   modalButton.removeEventListener('click', resolveSecondTie);
   modalButton.removeEventListener('click', resolveSecondTieButton);
@@ -126,8 +125,7 @@ function firstTie(pCard, eCard) {
 }
 function tieButtonFirst() {
   tieMessage.innerHTML = `You have decided to wager ${parseInt(modalInput.value)} cards!`;
-  // modalButton.style.display = 'none';
-  // modalInput.style.display = 'none';
+
   decideTie();
 }
 function decideTie() {
@@ -173,8 +171,8 @@ function decideTie() {
 }
 function changeTieView(winStatus, pCard, eCard, pRisk) {
   tieMessage.innerHTML = (winStatus === true) ? `You have won this war!` : `You lost the war!! :(`;
-  playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__jackInTheBox`);
-  enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__jackInTheBox`);
+  playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__jackInTheBox`);
+  enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__jackInTheBox`);
   cardResult.innerHTML = (winStatus === true) ? `You have GAINED ${pRisk.length * 2 + 2} cards!` : `ENEMY has won ${pRisk.length * 2 + 2} cards`;
   modalButton.innerHTML = 'Continue';
   modalInput.style.display = 'none';
@@ -232,8 +230,8 @@ function secondTieView(pCard, eCard) {
   tieMessage.innerHTML = `ANOTHER Tie! There is currently ${stash.length} cards at risk!  \
   You will only risk an additional two cards this tie.`
   modalButton.innerHTML = 'Continue';
-  playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__fadeInUpBig`);
-  enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__fadeInUpBig`);
+  playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__fadeInUpBig`);
+  enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__fadeInUpBig`);
   modalInput.style.display = 'none';
   cardResult.style.display = 'none';
   firstTieModal.style.display = 'flex';
@@ -301,8 +299,8 @@ function resolveSecondTie() {
 function secondChangeTieView(pCard, eCard) {
   firstTieModal.style.display = 'flex';
   tieMessage.innerHTML = (winStatus === true) ? `You have WON this war!` : `You LOST the war!! :(`;
-  playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__jackInTheBox`);
-  enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__jackInTheBox`);
+  playerCardTie.setAttribute('class', `card ${pCard.face} animate__animated animate__jackInTheBox`);
+  enemyCardTie.setAttribute('class', `card ${eCard.face} animate__animated animate__jackInTheBox`);
   cardResult.innerHTML = (winStatus === true) ? `You have GAINED ${stash.length + addPRisk.length + addERisk.length + 2} cards!` : `You have LOST out on ${stash.length + addPRisk.length + addERisk.length + 2} cards`;
   cardResult.style.display = 'block';
   modalButton.innerHTML = 'Continue';
@@ -321,19 +319,10 @@ function resolveSecondTieButton() {
   getWinner();
 }
 if (vw < 1125) {
-  alert('This game is currently formatted for a desktop screen. Sorry!')
-  playerCardTie.style.display = 'none';
-  enemyCardTie.style.display = 'none';
-  modalInput.style.display = 'none';
-  cardResult.style.display = 'none';
-  modalButton.innerHTML = 'Reload'
-  modalButton.removeEventListener('click', tieButtonFirst);
-  modalButton.removeEventListener('click', resolveSecondTie);
-  modalButton.removeEventListener('click', resolveSecondTieButton);
-  modalButton.removeEventListener('click', resolveSecondTie);
-  tieMessage.innerHTML = 'Unfortunately, this game has not yet been set up for smaller screens';
-  firstTieModal.style.display = 'flex';
-  modalButton.addEventListener('click', function() {
-    window.location.reload();
-  });
+  alert('This game is best enjoyed on a desktop screen!')
+  document.querySelector('h1').style.display = 'none';
+  document.querySelector('#player-deck').style.display = 'none';
+  document.querySelector('#enemy-deck').style.display = 'none';
+  document.querySelector('#p-how-many').style.display = 'none';
+  document.querySelector('#e-how-many').style.display = 'none';
 }

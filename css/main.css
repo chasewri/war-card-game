@@ -3,6 +3,21 @@ body {
   height: 100vh;
   text-align: center;
 }
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 45px;
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 1199px) {
+  body {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 699px) {
+  body {
+    font-size: 18px;
+  }
+}
 svg {
   filter: hue-rotate(-70deg) saturate(5) !important;
 }
