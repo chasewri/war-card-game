@@ -4,7 +4,7 @@ let playerHand = [];
 let enemyHand = [];
 const masterDeck = buildMasterDeck();
 let winStatus = null;
-const stash = [];
+let stash = [];
 let addPRisk = [];
 let addERisk = [];
 // Build deck -----------------------------------------------------------------
@@ -118,7 +118,8 @@ function firstTie(pCard, eCard) {
   enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__fadeInUpBig`);
   firstTieModal.style.display = 'flex';
   modalButton.removeEventListener('click', resolveSecondTie);
-  modalButton.removeEventListener('click', function(){resolveSecondTie(stash)});
+  modalButton.removeEventListener('click', resolveSecondTieButton);
+  modalButton.removeEventListener('click', resolveSecondTie);
   modalButton.removeEventListener('click', tieButtonSecond);
   modalButton.addEventListener('click', tieButtonFirst);
   if (playerHand.length <= 3 || enemyHand.length <= 3) {
@@ -184,7 +185,8 @@ function changeTieView(winStatus, pCard, eCard, pRisk) {
   modalInput.style.display = 'none';
   modalButton.removeEventListener('click', tieButtonFirst);
   modalButton.removeEventListener('click', resolveSecondTie);
-  modalButton.removeEventListener('click', function(){resolveSecondTie(stash)});
+  modalButton.removeEventListener('click', resolveSecondTieButton);
+  modalButton.removeEventListener('click', resolveSecondTie);
   modalButton.addEventListener('click', tieButtonSecond);
   firstTieModal.style.display = 'flex';
 }
@@ -209,7 +211,8 @@ function gameOver() {
   modalButton.innerHTML = 'Play Again!'
   modalButton.removeEventListener('click', tieButtonFirst);
   modalButton.removeEventListener('click', resolveSecondTie);
-  modalButton.removeEventListener('click', function(){resolveSecondTie(stash)});
+  modalButton.removeEventListener('click', resolveSecondTieButton);
+  modalButton.removeEventListener('click', resolveSecondTie);
   tieMessage.innerHTML = (playerHand.length >= 4) ? `Congratulations! You've WON the game!` : `I'm sorry for your loss! Please play again!`;
   firstTieModal.style.display = 'flex';
   modalButton.addEventListener('click', function() {
@@ -225,13 +228,13 @@ function secondTie(pCard, eCard, pRisk, eRisk) {
       stash.push(obj);
     });
     stash.push(pCard, eCard);
-    secondTieView(stash, pCard, eCard);
+    secondTieView(pCard, eCard);
     if (playerHand.length <= 3 || enemyHand.length <= 3) {
       gameOver();
     }
 }
-function secondTieView(stash, pCard, eCard) {
-  tieMessage.innerHTML = `Another Tie! There is currently ${stash.length} cards at risk!  \
+function secondTieView(pCard, eCard) {
+  tieMessage.innerHTML = `ANOTHER Tie! There is currently ${stash.length} cards at risk!  \
   You will only risk an additional two cards this tie.`
   modalButton.innerHTML = 'Continue';
   playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__fadeInUpBig`);
@@ -242,10 +245,10 @@ function secondTieView(stash, pCard, eCard) {
   modalButton.removeEventListener('click', tieButtonFirst);
   modalButton.removeEventListener('click', tieButtonSecond);
   modalButton.removeEventListener('click', resolveSecondTie);
-  modalButton.addEventListener('click', function(){resolveSecondTie(stash)});
-  return stash;
+  modalButton.removeEventListener('click', resolveSecondTieButton);
+  modalButton.addEventListener('click', resolveSecondTie);
 }
-function resolveSecondTie(stash) {
+function resolveSecondTie() {
   playerHand.shift();
   enemyHand.shift();
   if (playerHand.length <= 3 || enemyHand.length <= 3) {
@@ -255,6 +258,7 @@ function resolveSecondTie(stash) {
   addERisk = enemyHand.splice(0, 2);
   pCard = playerHand[0];
   eCard = enemyHand[0];
+  console.log(playerHand, enemyHand);
   if (pCard.value > eCard.value) {
     addPRisk.forEach(function(obj) {
       playerHand.push(obj);
@@ -266,13 +270,15 @@ function resolveSecondTie(stash) {
       playerHand.push(obj);
     });
     playerHand.push(pCard, eCard);
+    console.log(playerHand, enemyHand);
     playerHand.shift();
     enemyHand.shift();
     winStatus = true;
     gameStatus();
-    secondChangeTieView(winStatus, pCard, eCard);
+    secondChangeTieView(pCard, eCard);
   }
   if (pCard.value < eCard.value) {
+    console.log(playerHand, enemyHand);
     addPRisk.forEach(function(obj) {
       enemyHand.push(obj);
     });
@@ -286,27 +292,39 @@ function resolveSecondTie(stash) {
     playerHand.shift();
     enemyHand.shift();
     winStatus = false;
+    console.log(playerHand, enemyHand);
     gameStatus();
-    secondTieView(winStatus, pCard, eCard);
+    secondChangeTieView(pCard, eCard);
   }
   if (pCard.value === eCard.value) {
-    alert('hold on');
+    addPRisk.forEach(function(obj) {
+      stash.push(obj);
+    });
+    addERisk.forEach(function(obj) {
+      stash.push(obj);
+    });
+    stash.push(pCard, eCard);
+    secondTieView(pCard, eCard);
   }
 }
-function secondChangeTieView(winStatus, pCard, eCard) {
+function secondChangeTieView(pCard, eCard) {
   firstTieModal.style.display = 'flex';
-  tieMessage.innerHTML = (winStatus === true) ? `You have won this war!` : `You lost the war!! :(`;
+  tieMessage.innerHTML = (winStatus === true) ? `You have WON this war!` : `You LOST the war!! :(`;
   playerCardTie.setAttribute('class', `card xlarge ${pCard.face} animate__animated animate__jackInTheBox`);
   enemyCardTie.setAttribute('class', `card xlarge ${eCard.face} animate__animated animate__jackInTheBox`);
-  cardResult.innerHTML = (winStatus === true) ? `You have gained ${stash.length + 2} cards!` : `You have lost ${stash.length + 2} cards`;
+  cardResult.innerHTML = (winStatus === true) ? `You have GAINED ${stash.length + addPRisk.length + addERisk.length + 2} cards!` : `You have LOST out on ${stash.length + addPRisk.length + addERisk.length + 2} cards`;
+  cardResult.style.display = 'block';
   modalButton.innerHTML = 'Continue';
   modalInput.style.display = 'none';
   modalButton.removeEventListener('click', tieButtonFirst);
-  modalButton.removeEventListener('click', function(){resolveSecondTie(stash)});
+  modalButton.removeEventListener('click', resolveSecondTie);
   modalButton.removeEventListener('click', tieButtonSecond);
-  modalButton.addEventListener('click', resolveSecondTie);
+  modalButton.addEventListener('click', resolveSecondTieButton);
 }
-function resolveSecondTie() {
+function resolveSecondTieButton() {
+  stash = [];
+  addPRisk = [];
+  addERisk = [];
   cardResult.innerHTML = '';
   firstTieModal.style.display = 'none';
   getWinner();
